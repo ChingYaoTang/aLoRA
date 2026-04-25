@@ -15,13 +15,13 @@ httpx==0.28.1
 huggingface_hub==0.36.2
 multidict==6.7.1
 multiprocess==0.70.16
-peft==0.12.0
+peft==0.19.1
 propcache==0.4.1
 pyarrow==24.0.0
 safetensors==0.7.0
-tokenizers==0.19.1
+tokenizers==0.21.1
 tqdm==4.67.3
-transformers==4.44.2
+transformers==4.52.1
 trl==0.9.6
 typeguard==4.5.1
 typer==0.24.2
