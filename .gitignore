@@ -1,0 +1,46 @@
+# Virtual environment
+.venv/
+venv/
+env/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb
+
+# Model weights & checkpoints (usually very large)
+*.pt
+*.pth
+*.bin
+*.safetensors
+checkpoints/
+outputs/
+runs/
+
+# Datasets
+data/
+datasets/
+
+# Logs
+*.log
+logs/
+wandb/
+
+# HPC job files
+*.out
+*.err
+slurm-*.out
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
