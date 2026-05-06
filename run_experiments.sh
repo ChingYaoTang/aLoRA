@@ -14,7 +14,7 @@ source .venv/bin/activate
 
 SMOKE=${SMOKE:-0}
 SMOKE_FLAGS=""
-MODEL_DIR="smollm2-135m"
+MODEL_DIR="smollm2-360m"
 if [ "$SMOKE" = "1" ]; then
     SMOKE_FLAGS="--max_samples 10 --num_epochs 2"
     echo "=== SMOKE TEST MODE (10 samples, 2 epochs) ==="

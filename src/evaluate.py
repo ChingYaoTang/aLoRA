@@ -17,7 +17,7 @@ from peft import PeftModel
 from sklearn.metrics import classification_report
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
-MODEL_ID = "HuggingFaceTB/SmolLM2-135M-Instruct"
+MODEL_ID = "HuggingFaceTB/SmolLM2-360M-Instruct"
 
 SYSTEM_PROMPT = (
     "You are an answerability detection assistant. "
@@ -42,12 +42,12 @@ def build_prompt(record: dict, tokenizer, invoc_seq: str) -> str:
     return f"{prefix}{invoc_seq}"
 
 
-def predict(model, tokenizer, prompts: list, batch_size: int = 8) -> list:
+def predict(model, tokenizer, prompts: list, batch_size: int = 1) -> list:
     model.eval()
     predictions = []
     for i in range(0, len(prompts), batch_size):
         batch = prompts[i : i + batch_size]
-        inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=2048)
+        inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=8192)
         inputs = {k: v.to(model.device) for k, v in inputs.items()}
         with torch.no_grad():
             outputs = model.generate(

@@ -26,7 +26,7 @@ from transformers import (
 )
 from trl import DataCollatorForCompletionOnlyLM, SFTConfig, SFTTrainer
 
-MODEL_ID = "HuggingFaceTB/SmolLM2-135M-Instruct"
+MODEL_ID = "HuggingFaceTB/SmolLM2-360M-Instruct"
 
 # Invocation sequences in chat-template role format
 INVOC_SEQS = {
