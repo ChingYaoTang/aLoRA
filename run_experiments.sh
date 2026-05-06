@@ -12,17 +12,21 @@ set -euo pipefail
 # ── Activate environment ───────────────────────────────────────────────────────
 source .venv/bin/activate
 
-SMOKE=${SMOKE:-0}
-SMOKE_FLAGS=""
-if [ "$SMOKE" = "1" ]; then
-    SMOKE_FLAGS="--max_samples 10 --num_epochs 2"
-    echo "=== SMOKE TEST MODE (10 samples, 2 epochs) ==="
-fi
+# SMOKE=${SMOKE:-0}
+# SMOKE_FLAGS=""
+# if [ "$SMOKE" = "1" ]; then
+#     SMOKE_FLAGS="--max_samples 10 --num_epochs 2"
+#     echo "=== SMOKE TEST MODE (10 samples, 2 epochs) ==="
+# fi
 
 # ── Step 1: Preprocess ─────────────────────────────────────────────────────────
 echo ""
 echo "=== Step 1: Preprocessing ==="
-python src/preprocess.py --input reference.jsonl --output_dir data
+if [ ! -f data/train.jsonl ]; then
+    python src/preprocess.py --input reference.jsonl --output_dir data
+else
+    echo "Preprocessed data already exists, skipping."
+fi
 
 # ── Step 2 + 3: Train and evaluate each variant ────────────────────────────────
 for TYPE in baseline shorter descriptive generic; do

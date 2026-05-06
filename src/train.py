@@ -23,9 +23,8 @@ from transformers import (
     AutoTokenizer,
     BitsAndBytesConfig,
     EarlyStoppingCallback,
-    TrainingArguments,
 )
-from trl import DataCollatorForCompletionOnlyLM, SFTTrainer
+from trl import DataCollatorForCompletionOnlyLM, SFTConfig, SFTTrainer
 
 MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
 
@@ -71,10 +70,10 @@ def main():
     parser.add_argument("--val_data", default="data/val.jsonl")
     parser.add_argument("--num_epochs", type=int, default=25)
     parser.add_argument("--lr", type=float, default=5e-6)
-    parser.add_argument("--batch_size", type=int, default=4)
-    parser.add_argument("--grad_accum", type=int, default=2)
+    parser.add_argument("--batch_size", type=int, default=1)
+    parser.add_argument("--grad_accum", type=int, default=8)
     parser.add_argument("--max_samples", type=int, default=None, help="Limit samples for smoke test")
-    parser.add_argument("--max_seq_len", type=int, default=2048)
+    parser.add_argument("--max_seq_len", type=int, default=8096)
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
 
@@ -89,6 +88,7 @@ def main():
     # ── Tokenizer ──────────────────────────────────────────────────────────────
     tokenizer = AutoTokenizer.from_pretrained(MODEL_ID, trust_remote_code=True)
     tokenizer.padding_side = "right"
+    tokenizer.truncation_side = "left"  # truncate from doc start, preserve invoc seq + label at end
 
     invoc_token_ids = tokenizer(invoc_seq, add_special_tokens=False)["input_ids"]
     print(f"Invocation token IDs: {invoc_token_ids}")
@@ -106,7 +106,8 @@ def main():
         device_map="auto",
         trust_remote_code=True,
     )
-    model = prepare_model_for_kbit_training(model)
+    # gradient checkpointing conflicts with PEFT aLoRA forward hooks; disable it
+    model = prepare_model_for_kbit_training(model, use_gradient_checkpointing=False)
 
     # ── LoRA / aLoRA config ────────────────────────────────────────────────────
     lora_config = LoraConfig(
@@ -147,7 +148,7 @@ def main():
     )
 
     # ── Training ───────────────────────────────────────────────────────────────
-    training_args = TrainingArguments(
+    sft_config = SFTConfig(
         output_dir=str(output_dir),
         num_train_epochs=args.num_epochs,
         per_device_train_batch_size=args.batch_size,
@@ -157,6 +158,7 @@ def main():
         lr_scheduler_type="cosine",
         warmup_ratio=0.05,
         bf16=True,
+        gradient_checkpointing=False,
         logging_steps=10,
         eval_strategy="epoch",
         save_strategy="epoch",
@@ -166,16 +168,16 @@ def main():
         save_total_limit=2,
         seed=args.seed,
         report_to="none",
+        dataset_text_field="text",
+        max_seq_length=args.max_seq_len,
     )
 
     trainer = SFTTrainer(
         model=model,
-        args=training_args,
+        args=sft_config,
         train_dataset=train_ds,
         eval_dataset=val_ds,
         data_collator=collator,
-        dataset_text_field="text",
-        max_seq_length=args.max_seq_len,
         callbacks=[EarlyStoppingCallback(early_stopping_patience=3)],
     )
 
