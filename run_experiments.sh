@@ -12,12 +12,13 @@ set -euo pipefail
 # ── Activate environment ───────────────────────────────────────────────────────
 source .venv/bin/activate
 
-# SMOKE=${SMOKE:-0}
-# SMOKE_FLAGS=""
-# if [ "$SMOKE" = "1" ]; then
-#     SMOKE_FLAGS="--max_samples 10 --num_epochs 2"
-#     echo "=== SMOKE TEST MODE (10 samples, 2 epochs) ==="
-# fi
+SMOKE=${SMOKE:-0}
+SMOKE_FLAGS=""
+MODEL_DIR="smollm2-135m"
+if [ "$SMOKE" = "1" ]; then
+    SMOKE_FLAGS="--max_samples 10 --num_epochs 2"
+    echo "=== SMOKE TEST MODE (10 samples, 2 epochs) ==="
+fi
 
 # ── Step 1: Preprocess ─────────────────────────────────────────────────────────
 echo ""
@@ -34,7 +35,7 @@ for TYPE in baseline shorter descriptive generic; do
     echo "=== Training: ${TYPE} ==="
     python src/train.py \
         --invoc_type "${TYPE}" \
-        --output_dir "adapters/${TYPE}" \
+        --output_dir "adapters/${MODEL_DIR}/${TYPE}" \
         --train_data data/train.jsonl \
         --val_data   data/val.jsonl \
         ${SMOKE_FLAGS}
@@ -42,12 +43,12 @@ for TYPE in baseline shorter descriptive generic; do
     echo ""
     echo "=== Evaluating: ${TYPE} ==="
     python src/evaluate.py \
-        --adapter_path "adapters/${TYPE}" \
+        --adapter_path "adapters/${MODEL_DIR}/${TYPE}" \
         --test_data    data/test.jsonl \
-        --output       "results/${TYPE}_results.json"
+        --output       "results/${MODEL_DIR}/${TYPE}_results.json"
 done
 
 # ── Step 4: Comparison table ───────────────────────────────────────────────────
 echo ""
 echo "=== Final Comparison ==="
-python src/evaluate.py --compare results/
+python src/evaluate.py --compare "results/${MODEL_DIR}/"

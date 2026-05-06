@@ -17,7 +17,7 @@ from peft import PeftModel
 from sklearn.metrics import classification_report
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
-MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
+MODEL_ID = "HuggingFaceTB/SmolLM2-135M-Instruct"
 
 SYSTEM_PROMPT = (
     "You are an answerability detection assistant. "
@@ -93,13 +93,14 @@ def evaluate_adapter(adapter_path: str, test_data: str, output_path: str):
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.bfloat16,
+        bnb_4bit_compute_dtype=torch.float16,
         bnb_4bit_use_double_quant=True,
     )
     tokenizer = AutoTokenizer.from_pretrained(str(adapter_path), trust_remote_code=True)
     base_model = AutoModelForCausalLM.from_pretrained(
         MODEL_ID,
         quantization_config=bnb_config,
+        torch_dtype=torch.float16,
         device_map="auto",
         trust_remote_code=True,
     )
@@ -127,6 +128,7 @@ def evaluate_adapter(adapter_path: str, test_data: str, output_path: str):
     print(f"Weighted F1: {weighted_f1:.4f}")
 
     result = {
+        "model_id": MODEL_ID,
         "invoc_type": invoc_type,
         "invoc_seq": invoc_seq,
         "n_test": len(test_records),

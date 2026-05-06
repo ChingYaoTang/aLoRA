@@ -26,9 +26,9 @@ from transformers import (
 )
 from trl import DataCollatorForCompletionOnlyLM, SFTConfig, SFTTrainer
 
-MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
+MODEL_ID = "HuggingFaceTB/SmolLM2-135M-Instruct"
 
-# Invocation sequences in Qwen chat-template role format
+# Invocation sequences in chat-template role format
 INVOC_SEQS = {
     "baseline":    "<|im_start|>answerability\n",
     "shorter":     "<|im_start|>check\n",
@@ -73,7 +73,7 @@ def main():
     parser.add_argument("--batch_size", type=int, default=1)
     parser.add_argument("--grad_accum", type=int, default=8)
     parser.add_argument("--max_samples", type=int, default=None, help="Limit samples for smoke test")
-    parser.add_argument("--max_seq_len", type=int, default=8096)
+    parser.add_argument("--max_seq_len", type=int, default=8192)
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
 
@@ -97,12 +97,13 @@ def main():
     bnb_config = BitsAndBytesConfig(
         load_in_4bit=True,
         bnb_4bit_quant_type="nf4",
-        bnb_4bit_compute_dtype=torch.bfloat16,
+        bnb_4bit_compute_dtype=torch.float16,
         bnb_4bit_use_double_quant=True,
     )
     model = AutoModelForCausalLM.from_pretrained(
         MODEL_ID,
         quantization_config=bnb_config,
+        torch_dtype=torch.float16,
         device_map="auto",
         trust_remote_code=True,
     )
@@ -124,7 +125,17 @@ def main():
 
     # Save invocation sequence metadata alongside adapter
     with open(output_dir / "invoc_meta.json", "w") as f:
-        json.dump({"invoc_type": args.invoc_type, "invoc_seq": invoc_seq, "invoc_token_ids": invoc_token_ids}, f, indent=2)
+        json.dump(
+            {
+                "model_id": MODEL_ID,
+                "max_seq_len": args.max_seq_len,
+                "invoc_type": args.invoc_type,
+                "invoc_seq": invoc_seq,
+                "invoc_token_ids": invoc_token_ids,
+            },
+            f,
+            indent=2,
+        )
 
     # ── Datasets ───────────────────────────────────────────────────────────────
     train_raw = load_jsonl(args.train_data)
@@ -157,7 +168,8 @@ def main():
         learning_rate=args.lr,
         lr_scheduler_type="cosine",
         warmup_ratio=0.05,
-        bf16=True,
+        fp16=True,
+        bf16=False,
         gradient_checkpointing=False,
         logging_steps=10,
         eval_strategy="epoch",
