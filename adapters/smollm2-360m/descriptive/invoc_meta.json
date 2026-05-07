@@ -1,0 +1,21 @@
+{
+  "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+  "max_seq_len": 8192,
+  "invoc_type": "descriptive",
+  "invoc_seq": "<|im_start|>determine if the question is answerable given the documents\n",
+  "invoc_token_ids": [
+    1,
+    15611,
+    462,
+    585,
+    260,
+    1962,
+    314,
+    2988,
+    515,
+    1836,
+    260,
+    5660,
+    198
+  ]
+}
