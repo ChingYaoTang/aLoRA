@@ -73,7 +73,7 @@ def main():
     parser.add_argument("--batch_size", type=int, default=1)
     parser.add_argument("--grad_accum", type=int, default=8)
     parser.add_argument("--max_samples", type=int, default=None, help="Limit samples for smoke test")
-    parser.add_argument("--max_seq_len", type=int, default=8192)
+    parser.add_argument("--max_seq_len", type=int, default=2048)
     parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
 

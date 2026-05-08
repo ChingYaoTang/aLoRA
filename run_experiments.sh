@@ -24,7 +24,7 @@ fi
 echo ""
 echo "=== Step 1: Preprocessing ==="
 if [ ! -f data/train.jsonl ]; then
-    python src/preprocess.py --input reference.jsonl --output_dir data
+    python src/preprocess.py --output_dir data
 else
     echo "Preprocessed data already exists, skipping."
 fi
@@ -44,7 +44,7 @@ for TYPE in baseline shorter descriptive generic; do
     echo "=== Evaluating: ${TYPE} ==="
     python src/evaluate.py \
         --adapter_path "adapters/${MODEL_DIR}/${TYPE}" \
-        --test_data    data/test.jsonl \
+        --test_data    data/val.jsonl \
         --output       "results/${MODEL_DIR}/${TYPE}_results.json"
 done
 

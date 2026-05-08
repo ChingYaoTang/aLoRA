@@ -1,9 +1,9 @@
 """
-Evaluate a trained aLoRA adapter on the test set.
+Evaluate a trained aLoRA adapter on the validation set.
 
 Single adapter:
     python src/evaluate.py --adapter_path adapters/baseline \
-        --test_data data/test.jsonl --output results/baseline_results.json
+        --test_data data/val.jsonl --output results/baseline_results.json
 
 Compare all results in results/:
     python src/evaluate.py --compare results/
@@ -106,9 +106,9 @@ def evaluate_adapter(adapter_path: str, test_data: str, output_path: str):
     )
     model = PeftModel.from_pretrained(base_model, str(adapter_path))
 
-    test_records = load_jsonl(test_data)
-    prompts = [build_prompt(r, tokenizer, invoc_seq) for r in test_records]
-    gold = [r["label"] for r in test_records]
+    eval_records = load_jsonl(test_data)
+    prompts = [build_prompt(r, tokenizer, invoc_seq) for r in eval_records]
+    gold = [r["label"] for r in eval_records]
 
     preds = predict(model, tokenizer, prompts)
 
@@ -131,7 +131,7 @@ def evaluate_adapter(adapter_path: str, test_data: str, output_path: str):
         "model_id": MODEL_ID,
         "invoc_type": invoc_type,
         "invoc_seq": invoc_seq,
-        "n_test": len(test_records),
+        "n_eval": len(eval_records),
         "weighted_f1": weighted_f1,
         "report": report,
     }
@@ -186,7 +186,7 @@ def compare_results(results_dir: str):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--adapter_path", default=None)
-    parser.add_argument("--test_data", default="data/test.jsonl")
+    parser.add_argument("--test_data", default="data/val.jsonl")
     parser.add_argument("--output", default=None)
     parser.add_argument("--compare", default=None, help="Directory with *_results.json to compare")
     args = parser.parse_args()
