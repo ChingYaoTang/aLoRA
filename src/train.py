@@ -26,7 +26,7 @@ from transformers import (
 )
 from trl import DataCollatorForCompletionOnlyLM, SFTConfig, SFTTrainer
 
-MODEL_ID = "HuggingFaceTB/SmolLM2-360M-Instruct"
+MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
 
 # Invocation sequences in chat-template role format
 INVOC_SEQS = {
@@ -71,7 +71,7 @@ def main():
     parser.add_argument("--num_epochs", type=int, default=25)
     parser.add_argument("--lr", type=float, default=5e-6)
     parser.add_argument("--batch_size", type=int, default=1)
-    parser.add_argument("--grad_accum", type=int, default=8)
+    parser.add_argument("--grad_accum", type=int, default=16)
     parser.add_argument("--max_samples", type=int, default=None, help="Limit samples for smoke test")
     parser.add_argument("--max_seq_len", type=int, default=2048)
     parser.add_argument("--seed", type=int, default=42)

@@ -1,0 +1,138 @@
+[
+  {
+    "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+    "invoc_type": "baseline",
+    "invoc_seq": "<|im_start|>answerability\n",
+    "n_test": 84,
+    "weighted_f1": 0.825739184562714,
+    "report": {
+      "UNANSWERABLE": {
+        "precision": 1.0,
+        "recall": 0.15384615384615385,
+        "f1-score": 0.26666666666666666,
+        "support": 13.0
+      },
+      "ANSWERABLE": {
+        "precision": 0.8658536585365854,
+        "recall": 1.0,
+        "f1-score": 0.9281045751633987,
+        "support": 71.0
+      },
+      "accuracy": 0.8690476190476191,
+      "macro avg": {
+        "precision": 0.9329268292682926,
+        "recall": 0.5769230769230769,
+        "f1-score": 0.5973856209150327,
+        "support": 84.0
+      },
+      "weighted avg": {
+        "precision": 0.8866144018583042,
+        "recall": 0.8690476190476191,
+        "f1-score": 0.825739184562714,
+        "support": 84.0
+      }
+    }
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+    "invoc_type": "descriptive",
+    "invoc_seq": "<|im_start|>determine if the question is answerable given the documents\n",
+    "n_test": 84,
+    "weighted_f1": 0.8171992481203008,
+    "report": {
+      "UNANSWERABLE": {
+        "precision": 0.6666666666666666,
+        "recall": 0.15384615384615385,
+        "f1-score": 0.25,
+        "support": 13.0
+      },
+      "ANSWERABLE": {
+        "precision": 0.8641975308641975,
+        "recall": 0.9859154929577465,
+        "f1-score": 0.9210526315789473,
+        "support": 71.0
+      },
+      "accuracy": 0.8571428571428571,
+      "macro avg": {
+        "precision": 0.7654320987654321,
+        "recall": 0.5698808234019501,
+        "f1-score": 0.5855263157894737,
+        "support": 84.0
+      },
+      "weighted avg": {
+        "precision": 0.8336272780717224,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.8171992481203008,
+        "support": 84.0
+      }
+    }
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+    "invoc_type": "generic",
+    "invoc_seq": "<|im_start|>assistant\n",
+    "n_test": 84,
+    "weighted_f1": 0.8171992481203008,
+    "report": {
+      "UNANSWERABLE": {
+        "precision": 0.6666666666666666,
+        "recall": 0.15384615384615385,
+        "f1-score": 0.25,
+        "support": 13.0
+      },
+      "ANSWERABLE": {
+        "precision": 0.8641975308641975,
+        "recall": 0.9859154929577465,
+        "f1-score": 0.9210526315789473,
+        "support": 71.0
+      },
+      "accuracy": 0.8571428571428571,
+      "macro avg": {
+        "precision": 0.7654320987654321,
+        "recall": 0.5698808234019501,
+        "f1-score": 0.5855263157894737,
+        "support": 84.0
+      },
+      "weighted avg": {
+        "precision": 0.8336272780717224,
+        "recall": 0.8571428571428571,
+        "f1-score": 0.8171992481203008,
+        "support": 84.0
+      }
+    }
+  },
+  {
+    "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+    "invoc_type": "shorter",
+    "invoc_seq": "<|im_start|>check\n",
+    "n_test": 84,
+    "weighted_f1": 0.8655083655083656,
+    "report": {
+      "UNANSWERABLE": {
+        "precision": 0.7142857142857143,
+        "recall": 0.38461538461538464,
+        "f1-score": 0.5,
+        "support": 13.0
+      },
+      "ANSWERABLE": {
+        "precision": 0.8961038961038961,
+        "recall": 0.971830985915493,
+        "f1-score": 0.9324324324324325,
+        "support": 71.0
+      },
+      "accuracy": 0.8809523809523809,
+      "macro avg": {
+        "precision": 0.8051948051948052,
+        "recall": 0.6782231852654388,
+        "f1-score": 0.7162162162162162,
+        "support": 84.0
+      },
+      "weighted avg": {
+        "precision": 0.8679653679653679,
+        "recall": 0.8809523809523809,
+        "f1-score": 0.8655083655083656,
+        "support": 84.0
+      }
+    }
+  }
+]

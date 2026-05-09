@@ -1,0 +1,34 @@
+{
+  "model_id": "HuggingFaceTB/SmolLM2-360M-Instruct",
+  "invoc_type": "baseline",
+  "invoc_seq": "<|im_start|>answerability\n",
+  "n_test": 84,
+  "weighted_f1": 0.825739184562714,
+  "report": {
+    "UNANSWERABLE": {
+      "precision": 1.0,
+      "recall": 0.15384615384615385,
+      "f1-score": 0.26666666666666666,
+      "support": 13.0
+    },
+    "ANSWERABLE": {
+      "precision": 0.8658536585365854,
+      "recall": 1.0,
+      "f1-score": 0.9281045751633987,
+      "support": 71.0
+    },
+    "accuracy": 0.8690476190476191,
+    "macro avg": {
+      "precision": 0.9329268292682926,
+      "recall": 0.5769230769230769,
+      "f1-score": 0.5973856209150327,
+      "support": 84.0
+    },
+    "weighted avg": {
+      "precision": 0.8866144018583042,
+      "recall": 0.8690476190476191,
+      "f1-score": 0.825739184562714,
+      "support": 84.0
+    }
+  }
+}

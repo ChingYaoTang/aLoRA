@@ -1,0 +1,34 @@
+{
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "invoc_type": "generic",
+  "invoc_seq": "<|im_start|>assistant\n",
+  "n_eval": 194,
+  "weighted_f1": 0.9896907216494846,
+  "report": {
+    "UNANSWERABLE": {
+      "precision": 0.9666666666666667,
+      "recall": 0.9666666666666667,
+      "f1-score": 0.9666666666666667,
+      "support": 30.0
+    },
+    "ANSWERABLE": {
+      "precision": 0.9939024390243902,
+      "recall": 0.9939024390243902,
+      "f1-score": 0.9939024390243902,
+      "support": 164.0
+    },
+    "accuracy": 0.9896907216494846,
+    "macro avg": {
+      "precision": 0.9802845528455284,
+      "recall": 0.9802845528455284,
+      "f1-score": 0.9802845528455284,
+      "support": 194.0
+    },
+    "weighted avg": {
+      "precision": 0.9896907216494846,
+      "recall": 0.9896907216494846,
+      "f1-score": 0.9896907216494846,
+      "support": 194.0
+    }
+  }
+}

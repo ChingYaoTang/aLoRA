@@ -17,7 +17,7 @@ from peft import PeftModel
 from sklearn.metrics import classification_report
 from transformers import AutoModelForCausalLM, AutoTokenizer, BitsAndBytesConfig
 
-MODEL_ID = "HuggingFaceTB/SmolLM2-360M-Instruct"
+MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
 
 SYSTEM_PROMPT = (
     "You are an answerability detection assistant. "
