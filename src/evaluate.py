@@ -42,12 +42,12 @@ def build_prompt(record: dict, tokenizer, invoc_seq: str) -> str:
     return f"{prefix}{invoc_seq}"
 
 
-def predict(model, tokenizer, prompts: list, batch_size: int = 1) -> list:
+def predict(model, tokenizer, prompts: list, batch_size: int = 8) -> list:
     model.eval()
     predictions = []
     for i in range(0, len(prompts), batch_size):
         batch = prompts[i : i + batch_size]
-        inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=8192)
+        inputs = tokenizer(batch, return_tensors="pt", padding=True, truncation=True, max_length=2048)
         inputs = {k: v.to(model.device) for k, v in inputs.items()}
         with torch.no_grad():
             outputs = model.generate(
@@ -105,6 +105,10 @@ def evaluate_adapter(adapter_path: str, test_data: str, output_path: str):
         trust_remote_code=True,
     )
     model = PeftModel.from_pretrained(base_model, str(adapter_path))
+    model.generation_config.do_sample = False
+    model.generation_config.temperature = None
+    model.generation_config.top_p = None
+    model.generation_config.top_k = None
 
     eval_records = load_jsonl(test_data)
     prompts = [build_prompt(r, tokenizer, invoc_seq) for r in eval_records]
