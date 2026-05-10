@@ -2,8 +2,9 @@
 Build the answerability training dataset from the human MTRAG sources.
 
 The script combines the MTRAG Human and MTRAG-UN Human generation tasks,
-keeps only the two labels used by this project, filters examples that would
-be too long for the current training prompt, and writes train/val JSONL files.
+maps answerable examples to Y and unanswerable-style examples to N, filters
+examples that would be too long for the current training prompt, and writes
+train/val JSONL files.
 Raw source files are only read; they are never modified.
 """
 
@@ -16,7 +17,7 @@ from sklearn.model_selection import train_test_split
 from transformers import AutoTokenizer
 
 
-MODEL_ID = "HuggingFaceTB/SmolLM2-360M-Instruct"
+MODEL_ID = "Qwen/Qwen2.5-0.5B-Instruct"
 
 SYSTEM_PROMPT = (
     "You are an answerability detection assistant. "
@@ -34,6 +35,8 @@ DEFAULT_SOURCES = [
     Path("raw_data/mtrag-human/generation_tasks/reference.jsonl"),
     Path("raw_data/mtragun-human/generation_tasks/reference.jsonl"),
 ]
+
+NEGATIVE_LABELS = {"UNANSWERABLE", "PARTIAL", "UNDERSPECIFIED"}
 
 
 # Formatting -----------------------------------------------------------------
@@ -112,10 +115,10 @@ def get_raw_answerability(record: dict) -> str:
 
 
 def map_label(raw_label: str) -> str | None:
-    """Map only the requested labels to Y/N; all other labels are excluded."""
+    """Map raw answerability labels to the binary Y/N training labels."""
     if raw_label == "ANSWERABLE":
         return "Y"
-    if raw_label == "UNANSWERABLE":
+    if raw_label in NEGATIVE_LABELS:
         return "N"
     return None
 
