@@ -2,9 +2,10 @@
 Build the answerability training dataset from the human MTRAG sources.
 
 The script combines the MTRAG Human and MTRAG-UN Human generation tasks,
-maps answerable examples to Y and unanswerable-style examples to N, filters
-examples that would be too long for the current training prompt, and writes
-train/val JSONL files.
+maps answerable examples to Y, maps selected unanswerable-style examples to N,
+filters labels that should not enter the binary dataset, filters examples that
+would be too long for the current training prompt, and writes train/val JSONL
+files.
 Raw source files are only read; they are never modified.
 """
 
@@ -36,7 +37,7 @@ DEFAULT_SOURCES = [
     Path("raw_data/mtragun-human/generation_tasks/reference.jsonl"),
 ]
 
-NEGATIVE_LABELS = {"UNANSWERABLE", "PARTIAL", "UNDERSPECIFIED"}
+NEGATIVE_LABELS = {"UNANSWERABLE", "PARTIAL"}
 
 
 # Formatting -----------------------------------------------------------------

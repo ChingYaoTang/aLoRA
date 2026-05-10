@@ -190,7 +190,7 @@ def main():
         train_dataset=train_ds,
         eval_dataset=val_ds,
         data_collator=collator,
-        callbacks=[EarlyStoppingCallback(early_stopping_patience=3)],
+        callbacks=[EarlyStoppingCallback(early_stopping_patience=5)],
     )
 
     trainer.train()

@@ -42,7 +42,7 @@ def build_prompt(record: dict, tokenizer, invoc_seq: str) -> str:
     return f"{prefix}{invoc_seq}"
 
 
-def predict(model, tokenizer, prompts: list, batch_size: int = 8) -> list:
+def predict(model, tokenizer, prompts: list, batch_size: int = 1) -> list:
     model.eval()
     predictions = []
     for i in range(0, len(prompts), batch_size):
