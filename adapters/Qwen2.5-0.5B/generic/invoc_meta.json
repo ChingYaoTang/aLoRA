@@ -1,0 +1,11 @@
+{
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "max_seq_len": 2048,
+  "invoc_type": "generic",
+  "invoc_seq": "<|im_start|>assistant\n",
+  "invoc_token_ids": [
+    151644,
+    77091,
+    198
+  ]
+}

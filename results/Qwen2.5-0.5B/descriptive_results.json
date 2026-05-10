@@ -2,33 +2,33 @@
   "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
   "invoc_type": "descriptive",
   "invoc_seq": "<|im_start|>determine if the question is answerable given the documents\n",
-  "n_eval": 194,
-  "weighted_f1": 0.9948095112400398,
+  "n_eval": 221,
+  "weighted_f1": 0.8827833197559138,
   "report": {
     "UNANSWERABLE": {
-      "precision": 1.0,
-      "recall": 0.9666666666666667,
-      "f1-score": 0.9830508474576272,
-      "support": 30.0
+      "precision": 0.9117647058823529,
+      "recall": 0.5961538461538461,
+      "f1-score": 0.7209302325581395,
+      "support": 52.0
     },
     "ANSWERABLE": {
-      "precision": 0.9939393939393939,
-      "recall": 1.0,
-      "f1-score": 0.9969604863221885,
-      "support": 164.0
+      "precision": 0.8877005347593583,
+      "recall": 0.9822485207100592,
+      "f1-score": 0.9325842696629213,
+      "support": 169.0
     },
-    "accuracy": 0.9948453608247423,
+    "accuracy": 0.8914027149321267,
     "macro avg": {
-      "precision": 0.996969696969697,
-      "recall": 0.9833333333333334,
-      "f1-score": 0.9900056668899078,
-      "support": 194.0
+      "precision": 0.8997326203208555,
+      "recall": 0.7892011834319527,
+      "f1-score": 0.8267572511105303,
+      "support": 221.0
     },
     "weighted avg": {
-      "precision": 0.994876601062168,
-      "recall": 0.9948453608247423,
-      "f1-score": 0.9948095112400398,
-      "support": 194.0
+      "precision": 0.8933626926706512,
+      "recall": 0.8914027149321267,
+      "f1-score": 0.8827833197559138,
+      "support": 221.0
     }
   }
 }

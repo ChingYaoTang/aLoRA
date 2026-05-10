@@ -2,33 +2,33 @@
   "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
   "invoc_type": "shorter",
   "invoc_seq": "<|im_start|>check\n",
-  "n_eval": 194,
-  "weighted_f1": 0.9790884314169065,
+  "n_eval": 221,
+  "weighted_f1": 0.8534791496948924,
   "report": {
     "UNANSWERABLE": {
-      "precision": 0.9642857142857143,
-      "recall": 0.9,
-      "f1-score": 0.9310344827586207,
-      "support": 30.0
+      "precision": 0.8235294117647058,
+      "recall": 0.5384615384615384,
+      "f1-score": 0.6511627906976745,
+      "support": 52.0
     },
     "ANSWERABLE": {
-      "precision": 0.9819277108433735,
-      "recall": 0.9939024390243902,
-      "f1-score": 0.9878787878787879,
-      "support": 164.0
+      "precision": 0.8716577540106952,
+      "recall": 0.9644970414201184,
+      "f1-score": 0.9157303370786517,
+      "support": 169.0
     },
-    "accuracy": 0.979381443298969,
+    "accuracy": 0.8642533936651584,
     "macro avg": {
-      "precision": 0.9731067125645438,
-      "recall": 0.9469512195121952,
-      "f1-score": 0.9594566353187043,
-      "support": 194.0
+      "precision": 0.8475935828877006,
+      "recall": 0.7514792899408285,
+      "f1-score": 0.7834465638881631,
+      "support": 221.0
     },
     "weighted avg": {
-      "precision": 0.9791995670457972,
-      "recall": 0.979381443298969,
-      "f1-score": 0.9790884314169065,
-      "support": 194.0
+      "precision": 0.8603334381881095,
+      "recall": 0.8642533936651584,
+      "f1-score": 0.8534791496948924,
+      "support": 221.0
     }
   }
 }

@@ -1,0 +1,21 @@
+{
+  "model_id": "Qwen/Qwen2.5-0.5B-Instruct",
+  "max_seq_len": 2048,
+  "invoc_type": "descriptive",
+  "invoc_seq": "<|im_start|>determine if the question is answerable given the documents\n",
+  "invoc_token_ids": [
+    151644,
+    67,
+    24308,
+    421,
+    279,
+    3405,
+    374,
+    4226,
+    480,
+    2661,
+    279,
+    9293,
+    198
+  ]
+}
